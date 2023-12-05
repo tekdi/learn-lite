@@ -27,7 +27,7 @@ export class CourseenrollmentController {
       ts: new Date().toISOString(),
       params: {
         resmsgid: null,
-        msgid, 
+        msgid,
         err: null,
         status: 'success',
         errmsg: null,
@@ -68,5 +68,16 @@ export class CourseenrollmentController {
     }
   }
 
- 
+  @Get('/course/v1/user/enrollment/list/:userId')
+  async getEnrolledCourses(@Param('userId') userId: string): Promise<string[]> {
+    try {
+      const enrolledCourses = await this.courseenrollmentService.getEnrolledCourses(userId);
+      return enrolledCourses;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('User not found or has not enrolled in any courses');
+      }
+      throw error;
+    }
+  }
 }
