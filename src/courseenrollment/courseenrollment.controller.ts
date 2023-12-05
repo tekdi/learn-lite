@@ -58,5 +58,15 @@ export class CourseenrollmentController {
     return uuidv4();
   }
 
+  @Post('/course/v1/unenrol')
+  async unenrollUser(@Body() unenrollRequest: EnrollRequestDto): Promise<EnrollResponseDto> {
+    try {
+      const result = await this.courseenrollmentService.unenrollUser(unenrollRequest);
+      return this.createSuccessResponse(result);
+    } catch (error) {
+      return this.createErrorResponse(error.message);
+    }
+  }
+
  
 }
