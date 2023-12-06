@@ -29,4 +29,11 @@ export class CoursemanagementController {
 
   }
 
+  @Patch('/course/v1/batch/update/:batchId')
+  async update(@Param('batchId') batchId: string, @Body() updateCoursemanagementDto: UpdateCoursemanagementDto) {
+    const result= await this.coursemanagementService.update(batchId, updateCoursemanagementDto);
+    
+    return ResponseUtils.SuccessResponse({},"api.course.batch.update");
+  }
+
 }

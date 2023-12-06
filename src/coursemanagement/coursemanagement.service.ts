@@ -76,5 +76,90 @@ export class CoursemanagementService {
       return coursemanagement;
     }   
 
+    async update(batchId: string, updateCoursemanagementDto: UpdateCoursemanagementDto) {
+      const existingCoursemanagement = await this.findOne(batchId);
+  
+      const {
+        courseId,
+          name,
+          description,
+          enrollmentType,
+          startDate,
+          endDate,
+          certTemplates,
+          createdBy,
+          createdFor,
+          endDateText,
+          enrollmentEndDate,
+          enrollmentEndDateText,
+          mentors,
+          status,
+          tandc,
+      } = updateCoursemanagementDto;
+  
+      ResponseUtils.validateField(startDate, 'INVALID_START_DATE', 'Please provide start date', 'INVALID_START_DATE');
+      ResponseUtils.validateField(status, 'INVALID_STATUS', 'Please provide status', 'INVALID_STATUS');
+      ResponseUtils.validateField(courseId, 'INVALID_COURSE_ID', 'Course does not exist. Please provide a valid course identifier', 'INVALID_COURSE_ID');
+  
+      if (name) {
+          existingCoursemanagement.name = name;
+      }
+  
+      if (description) {
+          existingCoursemanagement.description = description;
+      }
+  
+      if (enrollmentType) {
+          existingCoursemanagement.enrollmentType = enrollmentType;
+      }
+  
+      if (startDate) {
+          existingCoursemanagement.startDate = startDate;
+      }
+  
+      if (endDate) {
+          existingCoursemanagement.endDate = endDate;
+      }
+  
+      if (certTemplates) {
+          existingCoursemanagement.certTemplates = certTemplates;
+      }
+  
+      if (createdBy) {
+          existingCoursemanagement.createdBy = createdBy;
+      }
+  
+      if (createdFor) {
+          existingCoursemanagement.createdFor = createdFor;
+      }
+  
+      if (endDateText) {
+          existingCoursemanagement.endDateText = endDateText;
+      }
+  
+      if (enrollmentEndDate) {
+          existingCoursemanagement.enrollmentEndDate = enrollmentEndDate;
+      }
+  
+      if (enrollmentEndDateText) {
+          existingCoursemanagement.enrollmentEndDateText = enrollmentEndDateText;
+      }
+  
+      if (mentors) {
+          existingCoursemanagement.mentors = mentors;
+      }
+  
+      if (status) {
+          existingCoursemanagement.status = status;
+      }
+  
+      if (tandc) {
+          existingCoursemanagement.tandc = tandc;
+      }
+  
+      return await this.courseManagementRepository.save(existingCoursemanagement);
+  
+      }
+
  
 }
