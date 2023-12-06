@@ -5,7 +5,7 @@ import { EnrollRequestDto } from './dto/enroll-request.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 
-@Controller('courseenrollment')
+@Controller()
 export class CourseenrollmentController {
   constructor(private readonly courseenrollmentService: CourseenrollmentService) {}
 
