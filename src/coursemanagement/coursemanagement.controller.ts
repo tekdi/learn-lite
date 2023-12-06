@@ -22,7 +22,11 @@ export class CoursemanagementController {
     
   }
 
+  @Get('/course/v1/batch/read/:batchId')
+  async findOne(@Param('batchId') batchId: string) {
+    const response = await this.coursemanagementService.findOne(batchId);
+    return ResponseUtils.SuccessResponse({response},"api.course.batch.read");
 
-
+  }
 
 }

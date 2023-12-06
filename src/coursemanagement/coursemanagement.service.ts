@@ -66,5 +66,15 @@ export class CoursemanagementService {
   
     }
 
+    async findOne(batchId: string) {
+ 
+    
+      const coursemanagement = await this.courseManagementRepository.findOne({ where: { batchId } });
+  
+      ResponseUtils.validateField(coursemanagement,'INVALID_BATCH_ID', 'Batch does not exist. Please provide a valid batch identifier', 'INVALID_BATCH_ID' )
+  
+      return coursemanagement;
+    }   
+
  
 }
