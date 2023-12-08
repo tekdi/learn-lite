@@ -1,10 +1,8 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateCoursemanagementDto } from './dto/create-coursemanagement.dto';
-import { UpdateCoursemanagementDto } from './dto/update-coursemanagement.dto';
+import { Injectable } from '@nestjs/common';
+import { CreateBatchemanagementDto } from './dto/create-coursemanagement.dto';
 import { Coursemanagement } from './entities/coursemanagement.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCourseResponseDto } from './dto/create-course-response.dto';
 import { ResponseUtils } from './response-util';
 
 @Injectable()
@@ -13,7 +11,7 @@ export class CoursemanagementService {
   
   constructor(@InjectRepository(Coursemanagement) private readonly courseManagementRepository: Repository<Coursemanagement>) {}
 
-  async create(createCoursemanagementDto: CreateCoursemanagementDto) {
+  async createBatch(createCoursemanagementDto: CreateBatchemanagementDto):Promise<Coursemanagement> {
     const {
       courseId,
       name,
@@ -57,14 +55,8 @@ export class CoursemanagementService {
       tandc,
   });
 
-  const result = await this.courseManagementRepository.save(coursemanagement);
-
-    const res = { response: 'SUCCESS', batchId: result.batchId };
-    return ResponseUtils.SuccessResponse(res, 'api.course.batch.create');
-
-  
-  
-    }
+  return   await this.courseManagementRepository.save(coursemanagement);
+   }
 
  
 }

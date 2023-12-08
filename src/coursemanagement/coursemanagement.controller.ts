@@ -1,9 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { CoursemanagementService } from './coursemanagement.service';
-import { CreateCoursemanagementDto } from './dto/create-coursemanagement.dto';
-import { UpdateCoursemanagementDto } from './dto/update-coursemanagement.dto';
-import { CreateCourseResponseDto } from './dto/create-course-response.dto';
-import { v4 as uuidv4 } from 'uuid';
+import { CreateBatchemanagementDto } from './dto/create-coursemanagement.dto';
 import { ResponseUtils } from './response-util';
 
 
@@ -15,14 +12,10 @@ export class CoursemanagementController {
   constructor(private readonly coursemanagementService: CoursemanagementService) {}
 
   @Post('/course/v1/batch/create')
-  async create(@Body() createCoursemanagementDto: CreateCoursemanagementDto) {
-    
-    return this.coursemanagementService.create(createCoursemanagementDto);
-
+  async createBatch(@Body() createCoursemanagementDto: CreateBatchemanagementDto) {
+   const result=  await this.coursemanagementService.createBatch(createCoursemanagementDto);  
+    const res = { response: 'SUCCESS', batchId: result.batchId };
+    return ResponseUtils.SuccessResponse(res, 'api.course.batch.create');
     
   }
-
-
-
-
 }
