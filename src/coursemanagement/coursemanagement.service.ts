@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ResponseUtils } from './response-util';
 
 @Injectable()
-export class CoursemanagementService {
+export class CourseBatchService {
 
   
   constructor(@InjectRepository(Batchmanagement) private readonly batchManagementRepository: Repository<Batchmanagement>) {}
