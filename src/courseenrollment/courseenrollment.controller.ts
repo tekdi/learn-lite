@@ -12,7 +12,7 @@ export class CourseenrollmentController {
   @Post('/course/v1/enrol')
   async enrollUser(@Body() enrollRequest: EnrollRequestDto): Promise<EnrollResponseDto> {
     try {
-      const result = await this.courseenrollmentService.enrollUser(enrollRequest);
+      const result = await this.courseenrollmentService.enrollCourse(enrollRequest);
       return this.createSuccessResponse(result);
     } catch (error) {
       return this.createErrorResponse(error.message);

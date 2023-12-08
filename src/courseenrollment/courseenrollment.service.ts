@@ -17,7 +17,7 @@ export class CourseenrollmentService {
   private validBatches = ['batchA', 'batchB'];
   private validUsers = ['user123', 'user456'];
 
-  async enrollUser(enrollRequest: EnrollRequestDto): Promise<string> {
+  async enrollCourse(enrollRequest: EnrollRequestDto): Promise<string> {
     const { courseId, batchId, userId } = enrollRequest;
 
     const isCourseValid = this.validCourses.includes(courseId);
