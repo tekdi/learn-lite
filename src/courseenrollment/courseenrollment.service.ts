@@ -17,7 +17,7 @@ export class CourseenrollmentService {
   private validBatches = ['batchA', 'batchB'];
   private validUsers = ['user123', 'user456'];
 
-  async enrollUser(enrollRequest: EnrollRequestDto): Promise<string> {
+  async enrollCourse(enrollRequest: EnrollRequestDto): Promise<string> {
     const { courseId, batchId, userId } = enrollRequest;
 
     const isCourseValid = this.validCourses.includes(courseId);
@@ -65,7 +65,7 @@ export class CourseenrollmentService {
     }
   }
 
-  async unenrollUser(unenrollRequest: EnrollRequestDto): Promise<string> {
+  async unenrollCourse(unenrollRequest: EnrollRequestDto): Promise<string> {
     const { courseId, batchId, userId } = unenrollRequest;
 
     if (!courseId) {

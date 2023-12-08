@@ -12,7 +12,7 @@ export class CourseenrollmentController {
   @Post('/course/v1/enrol')
   async enrollUser(@Body() enrollRequest: EnrollRequestDto): Promise<EnrollResponseDto> {
     try {
-      const result = await this.courseenrollmentService.enrollUser(enrollRequest);
+      const result = await this.courseenrollmentService.enrollCourse(enrollRequest);
       return this.createSuccessResponse(result);
     } catch (error) {
       return this.createErrorResponse(error.message);
@@ -61,7 +61,7 @@ export class CourseenrollmentController {
   @Post('/course/v1/unenrol')
   async unenrollUser(@Body() unenrollRequest: EnrollRequestDto): Promise<EnrollResponseDto> {
     try {
-      const result = await this.courseenrollmentService.unenrollUser(unenrollRequest);
+      const result = await this.courseenrollmentService.unenrollCourse(unenrollRequest);
       return this.createSuccessResponse(result);
     } catch (error) {
       return this.createErrorResponse(error.message);
