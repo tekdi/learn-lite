@@ -1,19 +1,17 @@
-import { HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateCoursemanagementDto } from './dto/create-coursemanagement.dto';
-import { UpdateCoursemanagementDto } from './dto/update-coursemanagement.dto';
-import { Coursemanagement } from './entities/coursemanagement.entity';
+import { Injectable } from '@nestjs/common';
+import { CreateBatchemanagementDto } from './dto/create-coursemanagement.dto';
+import { Batchmanagement } from './entities/coursemanagement.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CreateCourseResponseDto } from './dto/create-course-response.dto';
 import { ResponseUtils } from './response-util';
 
 @Injectable()
-export class CoursemanagementService {
+export class CourseBatchService {
 
-  
-  constructor(@InjectRepository(Coursemanagement) private readonly courseManagementRepository: Repository<Coursemanagement>) {}
 
-  async create(createCoursemanagementDto: CreateCoursemanagementDto) {
+  constructor(@InjectRepository(Batchmanagement) private readonly batchManagementRepository: Repository<Batchmanagement>) { }
+
+  async createBatch(createBatchmanagementDto: CreateBatchemanagementDto): Promise<Batchmanagement> {
     const {
       courseId,
       name,
@@ -30,7 +28,7 @@ export class CoursemanagementService {
       mentors,
       status,
       tandc,
-  } = createCoursemanagementDto;
+    } = createBatchmanagementDto;
 
     ResponseUtils.validateField(courseId, 'INVALID_COURSE_ID', 'Course does not exist. Please provide a valid course identifier', 'INVALID_COURSE_ID');
     ResponseUtils.validateField(name, 'INVALID_NAME', 'Please provide valid name', 'INVALID_NAME');
@@ -39,7 +37,7 @@ export class CoursemanagementService {
     ResponseUtils.validateField(startDate, 'INVALID_START_DATE', 'Please provide start date', 'INVALID_START_DATE');
     ResponseUtils.validateField(endDate, 'INVALID_END_DATE', 'Please provide end date', 'INVALID_END_DATE');
 
-    const coursemanagement = this.courseManagementRepository.create({
+    const batch = this.batchManagementRepository.create({
       courseId,
       name,
       description,
@@ -55,26 +53,20 @@ export class CoursemanagementService {
       mentors,
       status,
       tandc,
-  });
+    });
 
-  const result = await this.courseManagementRepository.save(coursemanagement);
+    return await this.batchManagementRepository.save(batch);
+  }
 
-    const res = { response: 'SUCCESS', batchId: result.batchId };
-    return ResponseUtils.SuccessResponse(res, 'api.course.batch.create');
+  async getBatch(batchId: string) {
 
-  
-  
-    }
 
-    async findOne(batchId: string) {
- 
-    
-      const coursemanagement = await this.courseManagementRepository.findOne({ where: { batchId } });
-  
-      ResponseUtils.validateField(coursemanagement,'INVALID_BATCH_ID', 'Batch does not exist. Please provide a valid batch identifier', 'INVALID_BATCH_ID' )
-  
-      return coursemanagement;
-    }   
+    const batchmanagement = await this.batchManagementRepository.findOne({ where: { batchId } });
 
- 
+    ResponseUtils.validateField(batchmanagement, 'INVALID_BATCH_ID', 'Batch does not exist. Please provide a valid batch identifier', 'INVALID_BATCH_ID')
+
+    return batchmanagement;
+  }
+
+
 }

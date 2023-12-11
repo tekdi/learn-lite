@@ -1,9 +1,8 @@
 import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { v4 as uuidv4 } from 'uuid';
 
 
 @Entity()
-export class Coursemanagement {
+export class Batchmanagement {
 
     @PrimaryColumn('text',{name:"courseid"})
     courseId: string;

@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { CoursemanagementController } from './coursemanagement.controller';
-import { CoursemanagementService } from './coursemanagement.service';
+import { CourseBatchController } from './coursemanagement.controller';
+import { CourseBatchService } from './coursemanagement.service';
 
 describe('CoursemanagementController', () => {
-  let controller: CoursemanagementController;
+  let controller: CourseBatchController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [CoursemanagementController],
-      providers: [CoursemanagementService],
+      controllers: [CourseBatchController],
+      providers: [CourseBatchService],
     }).compile();
 
-    controller = module.get<CoursemanagementController>(CoursemanagementController);
+    controller = module.get<CourseBatchController>(CourseBatchController);
   });
 
   it('should be defined', () => {

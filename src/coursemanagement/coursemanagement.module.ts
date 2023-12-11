@@ -1,14 +1,14 @@
 import { Module } from '@nestjs/common';
-import { CoursemanagementService } from './coursemanagement.service';
-import { CoursemanagementController } from './coursemanagement.controller';
+import { CourseBatchService } from './coursemanagement.service';
+import { CourseBatchController } from './coursemanagement.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Coursemanagement } from './entities/coursemanagement.entity';
+import { Batchmanagement } from './entities/coursemanagement.entity';
 
 
 @Module({
-  imports : [TypeOrmModule.forFeature([Coursemanagement])],
+  imports : [TypeOrmModule.forFeature([Batchmanagement])],
 
-  controllers: [CoursemanagementController],
-  providers: [CoursemanagementService],
+  controllers: [CourseBatchController],
+  providers: [CourseBatchService],
 })
 export class CoursemanagementModule {}

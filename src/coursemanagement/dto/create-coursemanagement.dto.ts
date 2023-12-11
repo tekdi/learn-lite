@@ -1,9 +1,7 @@
-import { Transform } from 'class-transformer';
-import { IsString, IsDate, IsBoolean, IsArray, IsInt,IsEnum } from 'class-validator';
+import { IsEnum } from 'class-validator';
 import { EnrollmentType, Status } from '../entities/coursemanagement.entity';
-import { v4 as uuidv4 } from 'uuid';
 
-export class CreateCoursemanagementDto {
+export class CreateBatchemanagementDto {
 
     courseId: string;
     name: string;

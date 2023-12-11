@@ -1,9 +1,9 @@
 import { IsEnum } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateCoursemanagementDto } from './create-coursemanagement.dto';
+import { CreateBatchemanagementDto } from './create-coursemanagement.dto';
 import { EnrollmentType, Status } from '../entities/coursemanagement.entity';
 
-export class UpdateCoursemanagementDto extends PartialType(CreateCoursemanagementDto) {
+export class UpdateBatchemanagementDto extends PartialType(CreateBatchemanagementDto) {
 
     
     courseId: string;

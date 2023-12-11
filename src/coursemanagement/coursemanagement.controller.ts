@@ -1,9 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { CoursemanagementService } from './coursemanagement.service';
-import { CreateCoursemanagementDto } from './dto/create-coursemanagement.dto';
-import { UpdateCoursemanagementDto } from './dto/update-coursemanagement.dto';
-import { CreateCourseResponseDto } from './dto/create-course-response.dto';
-import { v4 as uuidv4 } from 'uuid';
+import { Controller, Post, Body,Get,Patch,Param,Delete } from '@nestjs/common';
+import { CourseBatchService } from './coursemanagement.service';
+import { CreateBatchemanagementDto } from './dto/create-coursemanagement.dto';
 import { ResponseUtils } from './response-util';
 
 
@@ -11,20 +8,20 @@ import { ResponseUtils } from './response-util';
 
 
 @Controller('')
-export class CoursemanagementController {
-  constructor(private readonly coursemanagementService: CoursemanagementService) {}
+export class CourseBatchController {
+  constructor(private readonly courseBatchService: CourseBatchService) {}
 
   @Post('/course/v1/batch/create')
-  async create(@Body() createCoursemanagementDto: CreateCoursemanagementDto) {
-    
-    return this.coursemanagementService.create(createCoursemanagementDto);
-
+  async createBatch(@Body() createBatchmanagementDto: CreateBatchemanagementDto) {
+   const result=  await this.courseBatchService.createBatch(createBatchmanagementDto);  
+    const res = { response: 'SUCCESS', batchId: result.batchId };
+    return ResponseUtils.SuccessResponse(res, 'api.course.batch.create');
     
   }
 
   @Get('/course/v1/batch/read/:batchId')
-  async findOne(@Param('batchId') batchId: string) {
-    const response = await this.coursemanagementService.findOne(batchId);
+  async getBatch(@Param('batchId') batchId: string) {
+    const response = await this.courseBatchService.getBatch(batchId);
     return ResponseUtils.SuccessResponse({response},"api.course.batch.read");
 
   }
