@@ -65,6 +65,35 @@ export class CourseenrollmentService {
     }
   }
 
+  async unenrollUser(unenrollRequest: EnrollRequestDto): Promise<string> {
+    const { courseId, batchId, userId } = unenrollRequest;
+
+    if (!courseId) {
+      throw new BadRequestException('CourseId is Required');
+    }
+    if (!batchId) {
+      throw new BadRequestException('batchId is Required');
+    }
+    if (!userId) {
+      throw new BadRequestException('userId is Required');
+    }
+
+    const enrollmentEntity = await this.courseEnrollmentRepository.findOne({
+      where: { courseId, batchId, userId },
+    });
+
+    if (!enrollmentEntity) {
+      throw new NotFoundException('Enrollment record not found');
+    }
+
+    enrollmentEntity.active = false;
+
+    await this.courseEnrollmentRepository.save(enrollmentEntity);
+
+    const unenrollmentResult = 'Unenrollment successful';
+    return unenrollmentResult;
+  }
+
   
 
 
