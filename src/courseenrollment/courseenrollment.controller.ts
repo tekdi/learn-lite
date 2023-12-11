@@ -5,7 +5,7 @@ import { EnrollRequestDto } from './dto/enroll-request.dto';
 import { v4 as uuidv4 } from 'uuid';
 
 
-@Controller('courseenrollment')
+@Controller()
 export class CourseenrollmentController {
   constructor(private readonly courseenrollmentService: CourseenrollmentService) {}
 
@@ -27,7 +27,7 @@ export class CourseenrollmentController {
       ts: new Date().toISOString(),
       params: {
         resmsgid: null,
-        msgid, 
+        msgid,
         err: null,
         status: 'success',
         errmsg: null,
@@ -61,12 +61,23 @@ export class CourseenrollmentController {
   @Post('/course/v1/unenrol')
   async unenrollUser(@Body() unenrollRequest: EnrollRequestDto): Promise<EnrollResponseDto> {
     try {
-      const result = await this.courseenrollmentService.unenrollUser(unenrollRequest);
+      const result = await this.courseenrollmentService.unenrollCourse(unenrollRequest);
       return this.createSuccessResponse(result);
     } catch (error) {
       return this.createErrorResponse(error.message);
     }
   }
 
- 
+  @Get('/course/v1/user/enrollment/list/:userId')
+  async getEnrolledCourses(@Param('userId') userId: string): Promise<string[]> {
+    try {
+      const enrolledCourses = await this.courseenrollmentService.getEnrolledCourses(userId);
+      return enrolledCourses;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new NotFoundException('User not found or has not enrolled in any courses');
+      }
+      throw error;
+    }
+  }
 }

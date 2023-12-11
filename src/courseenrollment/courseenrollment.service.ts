@@ -65,7 +65,7 @@ export class CourseenrollmentService {
     }
   }
 
-  async unenrollUser(unenrollRequest: EnrollRequestDto): Promise<string> {
+  async unenrollCourse(unenrollRequest: EnrollRequestDto): Promise<string> {
     const { courseId, batchId, userId } = unenrollRequest;
 
     if (!courseId) {
@@ -94,7 +94,29 @@ export class CourseenrollmentService {
     return unenrollmentResult;
   }
 
-  
+  // courseenrollment.service.ts
 
+async getEnrolledCourses(userId: string): Promise<string[]> {
+  try {
+    const enrolledCourses = await this.courseEnrollmentRepository
+      .createQueryBuilder('enrollment')
+      .where('enrollment.userId = :userId', { userId })
+      // .andWhere('enrollment.active = true')
+      .select('enrollment.courseId', 'courseid')  // Use the default alias
+      .distinct(true)
+      .getRawMany();
+
+    // console.log('Enrolled Courses:', enrolledCourses);
+
+    if (enrolledCourses.length === 0) {
+      throw new NotFoundException('User has not enrolled in any courses');
+    }
+
+    return enrolledCourses.map((course) => course.courseid);  // Use the default alias
+  } catch (error) {
+    console.error('Error in getEnrolledCourses:', error);
+    throw error;
+  }
+}
 
 }
