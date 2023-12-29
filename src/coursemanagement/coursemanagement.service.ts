@@ -8,10 +8,10 @@ import { ResponseUtils } from './response-util';
 @Injectable()
 export class CourseBatchService {
 
-  
-  constructor(@InjectRepository(Batchmanagement) private readonly batchManagementRepository: Repository<Batchmanagement>) {}
 
-  async createBatch(createBatchmanagementDto: CreateBatchemanagementDto):Promise<Batchmanagement> {
+  constructor(@InjectRepository(Batchmanagement) private readonly batchManagementRepository: Repository<Batchmanagement>) { }
+
+  async createBatch(createBatchmanagementDto: CreateBatchemanagementDto): Promise<Batchmanagement> {
     const {
       courseId,
       name,
@@ -28,7 +28,7 @@ export class CourseBatchService {
       mentors,
       status,
       tandc,
-  } = createBatchmanagementDto;
+    } = createBatchmanagementDto;
 
     ResponseUtils.validateField(courseId, 'INVALID_COURSE_ID', 'Course does not exist. Please provide a valid course identifier', 'INVALID_COURSE_ID');
     ResponseUtils.validateField(name, 'INVALID_NAME', 'Please provide valid name', 'INVALID_NAME');
@@ -53,10 +53,20 @@ export class CourseBatchService {
       mentors,
       status,
       tandc,
-  });
+    });
 
-  return   await this.batchManagementRepository.save(batch);
-   }
+    return await this.batchManagementRepository.save(batch);
+  }
 
- 
+  async getBatch(batchId: string) {
+
+
+    const batchmanagement = await this.batchManagementRepository.findOne({ where: { batchId } });
+
+    ResponseUtils.validateField(batchmanagement, 'INVALID_BATCH_ID', 'Batch does not exist. Please provide a valid batch identifier', 'INVALID_BATCH_ID')
+
+    return batchmanagement;
+  }
+
+
 }
